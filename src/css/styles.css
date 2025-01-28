@@ -53,3 +53,162 @@ body {
     background-color: #D3d9D4;
 }
 /* -------------------------- /RESET  -------------------------- */
+
+/* -------------------------- Video  -------------------------- */
+body {
+    font-family: 'Poppins';
+    margin: 0;
+    padding: 0;
+}
+
+.video-bg {
+    height: 100vh;
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.video-bg video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    width: 100%;
+    height: 100vh;
+    object-fit: cover;
+}
+
+.effects {
+    position: absolute;
+    object-fit: cover;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.video-bg__content {
+    z-index: 2;
+    color: #ffffff;
+    font-size: 50px;
+}
+
+.main {
+    max-width: 1600px;
+    margin: 0 auto;
+    margin-top: 50px;
+    padding: 0 20px;
+}
+/* -------------------------- /Video  -------------------------- */
+
+/* -------------------------- Form  -------------------------- */
+.news-form {
+    display: flex;
+    gap: 20px;
+}
+
+.news-input {
+    width: 500px;
+    height: 50px;
+    padding-left: 30px;
+
+    outline: none;
+    border: 3px rgb(255, 255, 255) solid;
+    border-radius: 8px;
+    background-color: transparent;
+
+    color: #ffffff;
+    font-size: 30px;
+
+    transition: border-color 250ms linear, box-shadow 250ms linear;
+}
+
+.news-input:focus{
+    border-color: #71c4d5;
+    box-shadow: 0px 0px 300px 2px rgba(113, 196, 213, 1);
+}
+
+.search-news-btn {
+    width: 250px;
+
+    border: none;
+    border-radius: 8px;
+    outline: none;
+
+    color: #ffffff;
+    font-size: 30px;
+
+    background-color: #465abd;
+
+    transition: background-color 250ms linear, transform 250ms linear;
+}
+
+.search-news-btn:hover, .search-news-btn:focus {
+    background-color: #673387;
+    transform: scale(1.05);
+}
+/* -------------------------- Form  -------------------------- */
+
+/* -------------------------- Post styles  -------------------------- */
+
+.news-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.article-item {
+    display: flex;
+    flex-direction: column;
+
+    padding: 20px;
+    width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 30px;
+
+    box-shadow: 0px 0px 34px 0px rgba(0, 0, 0, 0.75);
+    border-radius: 8px;
+}
+
+.aricle-title {
+    font-size: 50px;
+    font-weight: 900;
+
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 30px;
+
+    color: #2c3b88;
+}
+
+.article-image {
+    margin-left: auto;
+    margin-right: auto;
+
+    width: 100%;
+    border-radius: 8px;
+}
+
+.article-description {
+    font-size: 30px;
+    font-weight: 700;
+    font-style: italic;
+
+    margin-bottom: 30px;
+}
+
+.article-content {
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+.article-date {
+    font-size: 20px;
+    margin-left: auto;
+}
+/* -------------------------- /Post styles  -------------------------- */

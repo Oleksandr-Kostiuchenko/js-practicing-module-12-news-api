@@ -7,7 +7,20 @@
     <link rel="stylesheet" href="./css/styles.css" />
   </head>
   <body>
-    
-    <script src="./main.js"></script>
+
+    <div class="video-bg">
+      <video src="./media-images-videos/background-video.mp4" type="video/mp4" autoplay muted loop></video>
+      <div class="effects"></div>
+      <div class="video-bg__content">
+        <form class="news-form" action="">
+          <input class="news-input" type="text" placeholder="Find news...">
+          <button class="search-news-btn" type="submit">Search</button>
+        </form>
+      </div>
+    </div>
+
+    <ul class="news-list"></ul>
+
+    <script src="./main.js" type="module"></script>
   </body>
 </html>
