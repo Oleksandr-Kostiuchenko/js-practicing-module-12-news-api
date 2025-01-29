@@ -14,16 +14,15 @@ const formEl = document.querySelector('.news-form');
 const inputEl = document.querySelector('.news-input');
 const buttonEl = document.querySelector('.search-news-btn');
 const newsListEl = document.querySelector('.news-list');
+const loadMoreButtonEl = document.querySelector('.load-more-btn');
 
 //* Function & Event listener
 let page = 1;
 let userQuery;
+let totalPages;
 
 const onFormSubmit = async event => {
     event.preventDefault();
-    
-    page = 1;
-    userQuery = inputEl.value.trim();
     
     if (userQuery === '') {
         iziToast.error({
@@ -37,18 +36,62 @@ const onFormSubmit = async event => {
     }
 
     try {
-        const galleryData = await fetchNews(userQuery, page);
+        loadMoreButtonEl.classList.add('is-hidden');
+        page = 1;
+        userQuery = inputEl.value.trim();
 
-        console.log(galleryData.data.articles);
+        const newsData = await fetchNews(userQuery, page);
+
+        if (newsData.data.totalResults === 0) {
+            iziToast.error({
+                title: 'Error',
+                titleSize: '25',
+                message: 'Sorry, there are no images matching your search query. Please try again!',
+                messageSize: '15',
+                position: 'bottomRight'
+            });
+            return;
+        }
+
+        console.log(newsData.data.articles);
 
         newsListEl.innerHTML = ''
         const newsHTML = [];
-        galleryData.data.articles.forEach(element => {
+        newsData.data.articles.forEach(element => {
             newsHTML.push(renderArticle(element));
         });
         
         console.log(newsHTML);
         newsListEl.insertAdjacentHTML('beforeend', newsHTML.join(''))
+
+        window.scrollBy({
+            top: 500,
+            left: 0,
+            behavior: "smooth",
+        });
+
+        totalPages = Math.ceil(newsData.data.totalResults / newsHTML.length);
+        iziToast.success({
+            message: `Sucess! ${totalPages * newsHTML.length} news are found!`,
+            messageSize: '30',
+            position: 'bottomRight'
+        });
+        
+        if (totalPages <= 1) {
+            return;
+        }
+        else if (page <= totalPages) {
+                if (page === totalPages) {
+                    loadMoreBtn.classList.add('is-hidden');
+                    loadMoreButtonEl.addEventListener('click', onLoadMoreBtnClick);
+                    return;
+                }
+
+            loadMoreButtonEl.classList.remove('is-hidden');
+
+            loadMoreButtonEl.removeEventListener('click', onLoadMoreBtnClick);
+            loadMoreButtonEl.addEventListener('click', onLoadMoreBtnClick);
+        }
     } catch (err) {
         iziToast.error({
             message: 'Sorry! Something went wrong(',
@@ -60,5 +103,46 @@ const onFormSubmit = async event => {
         return;
     }
 };
+
+const onLoadMoreBtnClick = async event => {
+    try {
+        page++;
+        console.log(page);
+
+        const newsData = await fetchNews(userQuery, page);
+
+        const newsHTML = []
+        newsData.data.articles.forEach(element => {
+            newsHTML.push(renderArticle(element));
+        })
+
+        newsListEl.insertAdjacentHTML('beforeend', newsHTML.join(''));
+
+        const newsItem = document.querySelector('.article-item');
+        const rect = newsItem.getBoundingClientRect()
+
+        window.scrollBy({
+            top: rect.height,
+            left: 0,
+            behavior: "smooth",
+        });
+
+        if (page === totalPages) {
+            iziToast.info({
+                    title: '',
+                    titleSize: '25',
+                    message: "We're sorry, but you've reached the end of search results.",
+                    messageSize: '20',
+                    position: 'bottomRight'
+            });
+
+            loadMoreButtonEl.classList.add('is-hidden');
+            loadMoreButtonEl.removeEventListener('click', onLoadMoreBtnClick);
+            return;
+    }
+    } catch (err) {
+        console.log(err);
+    }
+}
 
 formEl.addEventListener('submit', onFormSubmit)
