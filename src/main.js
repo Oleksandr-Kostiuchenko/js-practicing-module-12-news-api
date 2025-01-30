@@ -6,7 +6,7 @@ import "izitoast/dist/css/iziToast.min.css";
 import axios from "axios";
 
 //* Import modules
-import { fetchNews } from "./js/news-api";
+import { fetchNews, fetchNewsByFilter } from "./js/news-api";
 import { renderArticle } from "./js/render-functions";
 
 //* Find elements
@@ -15,6 +15,23 @@ const inputEl = document.querySelector('.news-input');
 const buttonEl = document.querySelector('.search-news-btn');
 const newsListEl = document.querySelector('.news-list');
 const loadMoreButtonEl = document.querySelector('.load-more-btn');
+const loader = document.querySelector('.loader');
+const loaderMore = document.querySelector('.loader-more');
+
+//* Loader settings
+const checkboxEl = document.querySelector('#theme-switch');
+let sortByDate = false;
+
+const onCheckboxClick = event => {
+    console.log(checkboxEl.checked);
+    if (checkboxEl.checked) {
+        sortByDate = true;
+    } else {
+        sortByDate = false;
+    }
+}
+
+checkboxEl.addEventListener('click', onCheckboxClick); 
 
 //* Function & Event listener
 let page = 1;
@@ -40,7 +57,16 @@ const onFormSubmit = async event => {
         page = 1;
         userQuery = inputEl.value.trim();
 
-        const newsData = await fetchNews(userQuery, page);
+        loader.classList.remove('hidden');
+
+        let newsData;
+        if (sortByDate) {
+            newsData = await fetchNewsByFilter(userQuery, page);
+        } else {
+            newsData = await fetchNews(userQuery, page);
+        }
+
+        loader.classList.add('hidden');
 
         if (newsData.data.totalResults === 0) {
             iziToast.error({
@@ -109,7 +135,11 @@ const onLoadMoreBtnClick = async event => {
         page++;
         console.log(page);
 
+        loaderMore.classList.remove('hidden');
+
         const newsData = await fetchNews(userQuery, page);
+
+        loaderMore.classList.add('hidden');
 
         const newsHTML = []
         newsData.data.articles.forEach(element => {

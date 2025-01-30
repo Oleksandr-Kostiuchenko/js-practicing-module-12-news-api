@@ -13,14 +13,27 @@
       <div class="effects"></div>
       <div class="video-bg__content">
         <form class="news-form" action="">
-          <input class="news-input" type="text" placeholder="Find news...">
-          <button class="search-news-btn" type="submit">Search</button>
+          <div class="input-wrapper">
+            <input class="news-input" type="text" placeholder="Find news...">
+            <button class="search-news-btn" type="submit">Search</button>
+          </div>
+          <div class="toggle-switch">
+            <p>Sort by date</p>
+            <span class="switcher-span">
+              <label class="switch">
+                <input id="theme-switch" type="checkbox" />
+                <span class="slider round"></span>
+              </label>
+            </span>
+          </div>
+          <span class="loader hidden"></span>
         </form>
       </div>
     </div>
 
     <ul class="news-list"></ul>
 
+    <span class="loader-more hidden"></span>
     <button class="load-more-btn is-hidden" type="button">Load more</button>
 
     <script src="./main.js" type="module"></script>

@@ -9,3 +9,10 @@ export const fetchNews = async (userQuery, page) => {
 
     return galleryData;
 }
+
+//* Export fetch function with filter
+export const fetchNewsByFilter = async (userQuery, page) => {
+    const galleryData = await axios.get(`https://newsapi.org/v2/everything?q=${userQuery}&apiKey=ee921bec82754786b568b8b5c41f6003&pageSize=15&page=${page}&sortBy=publishedAt`);
+
+    return galleryData;
+}
