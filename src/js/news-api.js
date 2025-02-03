@@ -11,8 +11,11 @@ export const fetchNews = async (userQuery, page) => {
 }
 
 //* Export fetch function with filter
+const dateToday = new Date();
+const formattedDate = dateToday.toISOString().split('T')[0]
+
 export const fetchNewsByFilter = async (userQuery, page) => {
-    const galleryData = await axios.get(`https://api.thenewsapi.com/v1/news/all?api_token=tcUbeilVimWPJx0gGV8QbLAhmBB3OykRPLRi7H5Z&search=${userQuery}&page=${page}&language=en&sort=published_on`);
+    const galleryData = await axios.get(`https://api.thenewsapi.com/v1/news/all?api_token=tcUbeilVimWPJx0gGV8QbLAhmBB3OykRPLRi7H5Z&search=${userQuery}&page=${page}&language=en&published_on=${formattedDate}&sort=published_on`);
 
     return galleryData;
 }
@@ -26,7 +29,7 @@ export const fetchNewsByCategory = async (userQuery, page, category) => {
 
 //* Export fetch function with filter and category
 export const fetchNewsByCategoryAndFilter = async (userQuery, page, category) => {
-    const galleryData = await axios.get(`https://api.thenewsapi.com/v1/news/all?api_token=tcUbeilVimWPJx0gGV8QbLAhmBB3OykRPLRi7H5Z&search=${userQuery}&page=${page}&language=en&sort=published_on&categories=${category}`);
+    const galleryData = await axios.get(`https://api.thenewsapi.com/v1/news/all?api_token=tcUbeilVimWPJx0gGV8QbLAhmBB3OykRPLRi7H5Z&search=${userQuery}&page=${page}&language=en&published_on=${formattedDate}&sort=published_on&categories=${category}`);
 
     return galleryData;
 }

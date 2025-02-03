@@ -23,7 +23,6 @@ const checkboxEl = document.querySelector('#theme-switch');
 let sortByDate = false;
 
 const onCheckboxClick = event => {
-    console.log(checkboxEl.checked);
     if (checkboxEl.checked) {
         sortByDate = true;
     } else {
@@ -39,7 +38,6 @@ let FetchCategory = 'default';
 
 selectCategoryEl.addEventListener('input', event => {
     FetchCategory = selectCategoryEl.value;
-    console.log(FetchCategory);
 })
 
 //* Function
@@ -93,15 +91,12 @@ const onFormSubmit = async event => {
             return;
         }
 
-        console.log(newsData.data.data);
-
         newsListEl.innerHTML = ''
         const newsHTML = [];
         newsData.data.data.forEach(element => {
             newsHTML.push(renderArticle(element));
         });
         
-        console.log(newsHTML);
         newsListEl.insertAdjacentHTML('beforeend', newsHTML.join(''))
 
         window.scrollBy({
@@ -138,7 +133,6 @@ const onFormSubmit = async event => {
             messageSize: '30',
             position: 'bottomRight'
         });
-        console.log(err);
 
         return;
     }
@@ -147,11 +141,19 @@ const onFormSubmit = async event => {
 const onLoadMoreBtnClick = async event => {
     try {
         page++;
-        console.log(page);
 
         loaderMore.classList.remove('hidden');
 
-        const newsData = await fetchNews(userQuery, page);
+        let newsData;
+        if (sortByDate && FetchCategory !== 'default') {
+            newsData = await fetchNewsByCategoryAndFilter(userQuery, page, FetchCategory);
+        } else if (sortByDate) {
+            newsData = await fetchNewsByFilter(userQuery, page);
+        }  else if (FetchCategory !== 'default') {
+            newsData = await fetchNewsByCategory(userQuery, page, FetchCategory);
+        } else {
+            newsData = await fetchNews(userQuery, page);
+        }
 
         loaderMore.classList.add('hidden');
 
