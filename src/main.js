@@ -42,7 +42,7 @@ selectCategoryEl.addEventListener('input', event => {
     console.log(FetchCategory);
 })
 
-//* Function & Event listener
+//* Function
 let page = 1;
 let userQuery;
 let totalPages;
@@ -53,6 +53,7 @@ const onFormSubmit = async event => {
     loadMoreButtonEl.classList.add('is-hidden');
     page = 1;
     userQuery = inputEl.value.trim();
+    localStorage.setItem('userQuery', userQuery);
     
     if (userQuery === '') {
         iziToast.error({
@@ -81,7 +82,7 @@ const onFormSubmit = async event => {
 
         loader.classList.add('hidden');
 
-        if (newsData.data.totalResults === 0) {
+        if (newsData.data.meta.found === 0) {
             iziToast.error({
                 title: 'Error',
                 titleSize: '25',
@@ -92,11 +93,11 @@ const onFormSubmit = async event => {
             return;
         }
 
-        console.log(newsData.data.articles);
+        console.log(newsData.data.data);
 
         newsListEl.innerHTML = ''
         const newsHTML = [];
-        newsData.data.articles.forEach(element => {
+        newsData.data.data.forEach(element => {
             newsHTML.push(renderArticle(element));
         });
         
@@ -109,7 +110,7 @@ const onFormSubmit = async event => {
             behavior: "smooth",
         });
 
-        totalPages = Math.ceil(newsData.data.totalResults / newsHTML.length);
+        totalPages = Math.ceil(newsData.data.meta.found / 3);
         iziToast.success({
             message: `Sucess! ${totalPages * newsHTML.length} news are found!`,
             messageSize: '30',
@@ -155,7 +156,7 @@ const onLoadMoreBtnClick = async event => {
         loaderMore.classList.add('hidden');
 
         const newsHTML = []
-        newsData.data.articles.forEach(element => {
+        newsData.data.data.forEach(element => {
             newsHTML.push(renderArticle(element));
         })
 
@@ -188,4 +189,19 @@ const onLoadMoreBtnClick = async event => {
     }
 }
 
+//* Restore user query
+const restoreUserQuery = () => {
+    const userQueryFromLS = localStorage.getItem('userQuery');
+
+    if(userQueryFromLS === null){
+        return;
+    }
+
+    inputEl.value = userQueryFromLS;
+    onFormSubmit(new Event('submit'));
+}
+
+restoreUserQuery()
+
+//* Add event listener 
 formEl.addEventListener('submit', onFormSubmit)

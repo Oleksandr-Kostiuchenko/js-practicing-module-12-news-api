@@ -5,28 +5,28 @@ import axios from "axios";
 
 //* Export fetch function
 export const fetchNews = async (userQuery, page) => {
-    const galleryData = await axios.get(`https://newsapi.org/v2/everything?q=${userQuery}&apiKey=ee921bec82754786b568b8b5c41f6003&pageSize=15&page=${page}`);
+    const galleryData = await axios.get(`https://api.thenewsapi.com/v1/news/all?api_token=tcUbeilVimWPJx0gGV8QbLAhmBB3OykRPLRi7H5Z&search=${userQuery}&page=${page}&language=en`);
 
     return galleryData;
 }
 
 //* Export fetch function with filter
 export const fetchNewsByFilter = async (userQuery, page) => {
-    const galleryData = await axios.get(`https://newsapi.org/v2/everything?q=${userQuery}&apiKey=ee921bec82754786b568b8b5c41f6003&pageSize=15&page=${page}&sortBy=publishedAt`);
+    const galleryData = await axios.get(`https://api.thenewsapi.com/v1/news/all?api_token=tcUbeilVimWPJx0gGV8QbLAhmBB3OykRPLRi7H5Z&search=${userQuery}&page=${page}&language=en&sort=published_on`);
 
     return galleryData;
 }
 
 //* Export fetch function with category
 export const fetchNewsByCategory = async (userQuery, page, category) => {
-    const galleryData = await axios.get(`https://newsapi.org/v2/top-headlines?q=${userQuery}&apiKey=ee921bec82754786b568b8b5c41f6003&pageSize=15&page=${page}&category=${category}`);
+    const galleryData = await axios.get(`https://api.thenewsapi.com/v1/news/all?api_token=tcUbeilVimWPJx0gGV8QbLAhmBB3OykRPLRi7H5Z&search=${userQuery}&page=${page}&language=en&categories=${category}`);    
 
     return galleryData;
 }
 
 //* Export fetch function with filter and category
 export const fetchNewsByCategoryAndFilter = async (userQuery, page, category) => {
-    const galleryData = await axios.get(`https://newsapi.org/v2/top-headlines?q=${userQuery}&apiKey=ee921bec82754786b568b8b5c41f6003&pageSize=15&page=${page}&sortBy=publishedAt&category=${category}`);
+    const galleryData = await axios.get(`https://api.thenewsapi.com/v1/news/all?api_token=tcUbeilVimWPJx0gGV8QbLAhmBB3OykRPLRi7H5Z&search=${userQuery}&page=${page}&language=en&sort=published_on&categories=${category}`);
 
     return galleryData;
 }
