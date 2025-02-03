@@ -17,14 +17,26 @@
             <input class="news-input" type="text" placeholder="Find news...">
             <button class="search-news-btn" type="submit">Search</button>
           </div>
-          <div class="toggle-switch">
-            <p>Sort by date</p>
-            <span class="switcher-span">
-              <label class="switch">
-                <input id="theme-switch" type="checkbox" />
-                <span class="slider round"></span>
-              </label>
-            </span>
+          <div class="sort-wrapper">
+            <select name="news-category" class="category-select">
+              <option value="default">Choose a category</option>
+              <option value="business">Business</option>
+              <option value="entertainment">Entertainment</option>
+              <option value="general">General</option>
+              <option value="health">Health</option>
+              <option value="science">Science</option>
+              <option value="sports">Sports</option>
+              <option value="technology">Technology</option>
+            </select>
+            <div class="toggle-switch">
+              <p>Sort by date</p>
+              <span class="switcher-span">
+                <label class="switch">
+                  <input id="theme-switch" type="checkbox" />
+                  <span class="slider round"></span>
+                </label>
+              </span>
+            </div>
           </div>
           <span class="loader hidden"></span>
         </form>

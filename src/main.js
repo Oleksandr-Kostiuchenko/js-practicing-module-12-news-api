@@ -6,7 +6,7 @@ import "izitoast/dist/css/iziToast.min.css";
 import axios from "axios";
 
 //* Import modules
-import { fetchNews, fetchNewsByFilter } from "./js/news-api";
+import { fetchNews, fetchNewsByFilter, fetchNewsByCategory, fetchNewsByCategoryAndFilter} from "./js/news-api";
 import { renderArticle } from "./js/render-functions";
 
 //* Find elements
@@ -18,7 +18,7 @@ const loadMoreButtonEl = document.querySelector('.load-more-btn');
 const loader = document.querySelector('.loader');
 const loaderMore = document.querySelector('.loader-more');
 
-//* Loader settings
+//* SortByDate settings
 const checkboxEl = document.querySelector('#theme-switch');
 let sortByDate = false;
 
@@ -33,6 +33,15 @@ const onCheckboxClick = event => {
 
 checkboxEl.addEventListener('click', onCheckboxClick); 
 
+//* SortByCategory settings
+const selectCategoryEl = document.querySelector('.category-select');
+let FetchCategory = 'default';
+
+selectCategoryEl.addEventListener('input', event => {
+    FetchCategory = selectCategoryEl.value;
+    console.log(FetchCategory);
+})
+
 //* Function & Event listener
 let page = 1;
 let userQuery;
@@ -40,6 +49,10 @@ let totalPages;
 
 const onFormSubmit = async event => {
     event.preventDefault();
+
+    loadMoreButtonEl.classList.add('is-hidden');
+    page = 1;
+    userQuery = inputEl.value.trim();
     
     if (userQuery === '') {
         iziToast.error({
@@ -53,15 +66,15 @@ const onFormSubmit = async event => {
     }
 
     try {
-        loadMoreButtonEl.classList.add('is-hidden');
-        page = 1;
-        userQuery = inputEl.value.trim();
-
         loader.classList.remove('hidden');
 
         let newsData;
-        if (sortByDate) {
+        if (sortByDate && FetchCategory !== 'default') {
+            newsData = await fetchNewsByCategoryAndFilter(userQuery, page, FetchCategory);
+        } else if (sortByDate) {
             newsData = await fetchNewsByFilter(userQuery, page);
+        }  else if (FetchCategory !== 'default') {
+            newsData = await fetchNewsByCategory(userQuery, page, FetchCategory);
         } else {
             newsData = await fetchNews(userQuery, page);
         }

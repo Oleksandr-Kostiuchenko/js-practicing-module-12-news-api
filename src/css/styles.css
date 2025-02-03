@@ -188,6 +188,29 @@ body {
 .load-more-btn.is-hidden{
     display: none;
 }
+
+.sort-wrapper{
+    display: flex;
+    align-items: center;
+}
+
+.category-select{
+    width: 300px;
+    height: 50px;
+
+    border: none;
+    outline: none;
+
+    font-size: 25px;
+    border-radius: 8px;
+    padding: 10px;
+
+    margin-right: auto;
+
+    background-color: rgba(130, 53, 168, 0.6);
+    color: white;
+    font-weight: 600px;
+}
 /* -------------------------- Form  -------------------------- */
 
 /* -------------------------- Post styles  -------------------------- */
@@ -377,59 +400,6 @@ body {
 .toggle-switch p {
     margin-right: 10px;
 }
-/* 
-#theme-switch[type='text'] {
-    flex: 1;
-    padding: 10px;
-    border: none;
-    border-bottom: 2px solid #ddd;
-    font-size: 18px;
-}
-
-button[type='submit'] {
-    padding: 10px 20px;
-    margin-left: 5px;
-    background-color: #008cba;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-li {
-    padding: 10px;
-    background-color: #f2f2f2;
-    margin-bottom: 5px;
-    border-radius: 5px;
-    position: relative;
-    display: flex;
-    justify-content: space-between;
-}
-
-li div {
-    display: flex;
-    gap: 8px;
-}
-
-li #theme-switch {
-    width: 70%;
-    border: none;
-    background-color: #f2f2f2;
-}
-
-li #theme-switch.active {
-    width: 70%;
-    background-color: #ffffff;
-}
-
-li button[data-action='edit'] {
-    background-color: #355075;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-    padding: 5px 10px;
-    border-radius: 5px;
-} */
 
 .switcher-span{
     display: flex;
